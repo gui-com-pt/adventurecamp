@@ -1,0 +1,15 @@
+{
+    "SIGNUP": {
+    	"INTRO_TEXT" : "Texto de introdução do AA!<br>Texto de introdução do AA de introdução do AA de introdução do AA<br>. Texto de introdução do AA!",
+    	"HEADER" : "Signup",
+        "NAME_LABEL": "Name",
+        "BIRTHDAY_LABEL": "Birthday",
+        "SUBMIT_LABEL" : "Submit Subscription",
+        "ADDRESS_LABEL" : "Address",
+        "COUNTRY_LABEL" : "Country",
+        "CITY_LABEL" : "City",
+        "CEP_LABEL" : "Cep",
+        "EMAIL_LABEL": "Email",
+        "CONTACT_LABEL": "Contact"
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "adventurecamp",
+  "version": "0.0.1",
+  "homepage": "https://github.com/guilhermegeek/adventurecamp",
+  "authors": [
+    "Guilherme Cardoso <email@guilhermecardoso.pt>"
+  ],
+  "description": "Adventure Camp website",
+  "keywords": [
+    "adventurecamp"
+  ],
+  "license": "APACHE2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-less": "~3.1.1",
+    "angular-translate-loader-partial": "~2.0.0",
+    "angular-translate": "~2.0.1",
+      "angular-bootstrap-validation": "*",
+       "angular-bootstrap": "~0.10.0",
+         "ngInfiniteScroll": "~1.1.2"
+  },
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "angular": "~1.2.16",
+    "angular-ui-router": "~0.2.10"
+  }
+}

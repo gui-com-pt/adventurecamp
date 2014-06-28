@@ -1,0 +1,48 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,700);
+body {
+    background-color: #355c6e;
+}
+h2 {
+        margin-top: 0px;
+        margin-bottom: 10px;
+}
+a &:hover {
+   text-decoration:none; 
+}
+
+#main {
+    background-image: url('/assets/bgsignup.jpg');
+    background-size: contain;
+}
+
+.aa-section {
+    .transparentBackgroundColorMixin(0.9, #FFFFFF);
+    padding: 10px;
+    overflow: auto;
+    max-height: 700px;
+}
+/* 
+ * Used for first words in the begining of a sentence
+ */
+.aa-texta {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+.divider {
+    height:50px;
+}
+
+.section {
+    padding-top:50px;
+    padding-bottom:50px;
+    overflow:auto;
+}
+
+/*
+ * Signup directive
+ */
+
+.aa-signup {
+    .transparentBackgroundColorMixin(0.9, @colorSecondary);
+}
