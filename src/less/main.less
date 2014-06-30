@@ -1,19 +1,30 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic);
+
 body {
     background-color: #355c6e;
 }
 h2 {
-        margin-top: 0px;
-        margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 a &:hover {
-   text-decoration:none; 
+    text-decoration:none; 
 }
 
 #main {
+    /*background-image: url('/assets/bgsignup.jpg');
+    background-size: cover;
+    min-height: 520px;*/
+}
+.aa-container {
     background-image: url('/assets/bgsignup.jpg');
     background-size: contain;
 }
+.sidebar-closed {
+    
+}
+
 
 .aa-section {
     .transparentBackgroundColorMixin(0.9, #FFFFFF);
@@ -45,4 +56,12 @@ a &:hover {
 
 .aa-signup {
     .transparentBackgroundColorMixin(0.9, @colorSecondary);
+}
+
+.btn-signup {
+    float: left;
+    background-color: #71cf5f;
+    color: @brand-primary;
+    font-weight: 700;
+    padding:4px 20px;
 }

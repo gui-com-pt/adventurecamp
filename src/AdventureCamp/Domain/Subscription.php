@@ -1,7 +1,11 @@
 <?php
 namespace AdventureCamp\Domain;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-class Subscription {
+/**
+ * @ODM\Document(collection="subscription")
+ */
+class Subscription implements \JsonSerializable {
     /**
      * @ODM\Id
      */
@@ -46,6 +50,16 @@ class Subscription {
      * @ODM\Field(type="string")
      */
     protected $observations;
+    
+    /**
+     * @ODM\Field
+     */
+    protected $state;
+    
+    public function jsonSerialize() {
+        $vars = $this;
+        return get_object_vars($vars);
+    }
 
     public function getId(){
         return $this->id;
@@ -109,5 +123,11 @@ class Subscription {
     public function setObservations($observations) {
         $this->observations = $observations;
     }
-
+    
+    public function getState() {
+        return $this->state;
+    }
+    public function setState($state) {
+        $this->state = $state;
+    }
 }

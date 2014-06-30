@@ -1,43 +1,40 @@
 <div id="aa-signup">
     <span class="pull-right" ng-click="close()"><i class="fa fa-ban"></i></span>
-        <form class="form" bs-validation novalidate ng-model="form.signup">
-
-            <div class="form-group">
-                <label class="control-label" translate="SIGNUP.NAME_LABEL"></label>
-                <input required type="text" class="form-control" ng-model="name" />
+    <form class="form" name="form.register" bs-has novalidate>
+        <div class="form-group">
+            <label class="control-label" translate="SIGNUP.NAME_LABEL"></label>
+            <input required type="text" class="form-control" ng-model="name" />
+        </div>
+        <div class="form-group">
+            <label required class="control-label" translate="SIGNUP.BIRTHDAY_LABEL"></label>
+            <div class="dropdown">
+                <a class="dropdown-toggle" id="birthdayDropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
+                    <div class="input-group"><input type="text" class="form-control input-sm" data-ng-model="register.birthday"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <datetimepicker ng-model="birthday" data-datetimepicker-config="{ dropdownSelector: '#birthdayDropdown', minView: 'day', startView: 'year' }"/>
+                </ul>
             </div>
-            <div class="form-group">
-                <label required class="control-label" translate="SIGNUP.BIRTHDAY_LABEL"></label>
-<div class="input-group">
-    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input type="text" class="form-control input-sm" ng-model="birthday" />
-</div>
-
-            </div>
-            <div class="form-group">
-                <label required class="control-label" translate="SIGNUP.CONTACT_LABEL"></label>
-
-                <input  required type="text" class="form-control" ng-model="contact" />
-
-            </div>
-            <div class="form-group">
-                <label required class="control-label" translate="SIGNUP.EMAIL_LABEL"></label>
-
-                <input type="text" class="form-control" ng-model="email" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label" translate="SIGNUP.ADDRESS_LABEL"></label>
-                <input type="text" class="form-control" ng-model="address" />
-            </div>
-            <div class="form-group">
-                <label class="control-label" translate="SIGNUP.CEP_LABEL"></label>
-                <input type="text" class="form-control" ng-model="cep" />
-            </div>
-            <div class="row">
-                <div class="col-xs-24">
-                    <button class="btn btn-primary" type="submit" translate="SIGNUP.SUBMIT_LABEL"></button>
-                </div>
-            </div>
-        </form>
+        </div>
+        <div class="form-group">
+            <label required class="control-label" translate="SIGNUP.CONTACT_LABEL"></label>
+            <input  required type="text" class="form-control" ng-model="contact" />
+        </div>
+        <div class="form-group">
+            <label required class="control-label" translate="SIGNUP.EMAIL_LABEL"></label>
+            <input type="text" class="form-control" ng-model="email" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="SIGNUP.ADDRESS_LABEL"></label>
+            <input type="text" class="form-control" ng-model="address" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="SIGNUP.CEP_LABEL"></label>
+            <input type="text" class="form-control" ng-model="cep" />
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" translate="SIGNUP.SUBMIT_LABEL"></button>
+        </div>
+    </form>
 </div>

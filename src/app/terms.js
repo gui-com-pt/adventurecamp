@@ -1,5 +1,5 @@
 angular.
         module('adventurecamp').
-        controller('temsCtrl', [function(){
+        controller('termsCtrl', [function(){
                 
         }]);

@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace AdventureCamp\ServiceModel;
 
@@ -20,14 +20,14 @@ class FindSubscriptionModel {
 		$this->skip = $skip;
 	}
 
-	public function getTake($) {
+	public function getTake() {
 		return $this->take;
 	}
 	public function setTake($take) {
 		$this->take = $take;
 	}
 
-	public fucntion getEventId() {
+	public function getEventId() {
 		return $this->eventId;
 	}
 	public function setEventId(\MongoId $id) {

@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace AdventureCamp\ServiceModel;
 

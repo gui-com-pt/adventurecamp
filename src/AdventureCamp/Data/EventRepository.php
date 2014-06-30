@@ -1,22 +1,26 @@
-<?
+<?php
+
 namespace Volupio\Data;
 
 class EventRepository {
 
-	protected $dm;
-	const MONGO_EVENT = 'AdventureCamp\Domain\Event';
+    /**     * @var type \DocumentMannager  */
+    protected $dm;
 
-	public function __construct(\Pimple $ioc) {
-		$this->dm = $ioc['dm'];
-	}
+    const MONGO_EVENT = 'AdventureCamp\Domain\Event';
 
-	public function create(\AdventureCamp\ServiceModel\CreateEventModel $model) {
-		$entity = new \AdventureCamp\Domain\Event();
-		$entity->setName($model->getName());
-		$entity->setWhen($model->getWhen());
-		$entity->setSubscriptionsCount(0);
+    public function __construct(\Pimple $ioc) {
+        $this->dm = $ioc['dm'];
+    }
 
-		$this->dm->persist($entity);
-		return $entity;
-	}
+    public function create(\AdventureCamp\ServiceModel\CreateEventModel $model) {
+        $entity = new \AdventureCamp\Domain\Event();
+        $entity->setName($model->getName());
+        $entity->setWhen($model->getWhen());
+        $entity->setSubscriptionsCount(0);
+
+        $this->dm->persist($entity);
+        return $entity;
+    }
+
 }

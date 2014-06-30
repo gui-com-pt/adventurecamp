@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace AdventureCamp\ServiceModel;
 
@@ -45,7 +45,7 @@ class CreateSubscriptionModel {
     public function getBirthday(){
         return $this->birthday;
     }
-    public function setBirthday($date) {
+    public function setBirthday(\DateTime $date) {
         $this->birthday = $date;
     }
 

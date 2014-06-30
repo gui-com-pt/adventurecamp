@@ -1,4 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic);
 /**
  * Adventure Camp LESS
  *
@@ -7942,6 +7943,11 @@ a :hover {
   text-decoration: none;
 }
 #main {
+  /*background-image: url('/assets/bgsignup.jpg');
+    background-size: cover;
+    min-height: 520px;*/
+}
+.aa-container {
   background-image: url('/assets/bgsignup.jpg');
   background-size: contain;
 }
@@ -7973,9 +7979,18 @@ a :hover {
 .aa-signup {
   background-color: rgba(215, 217, 217, 0.9);
 }
+.btn-signup {
+  float: left;
+  background-color: #71cf5f;
+  color: #0c3d54;
+  font-weight: 700;
+  padding: 4px 20px;
+}
 .aa-navmenu-container ul.aa-navmenu {
+  padding: 0;
   margin: 0;
   text-align: center;
+  margin: 6px auto;
 }
 .aa-navmenu-container ul.aa-navmenu:before,
 .aa-navmenu-container ul.aa-navmenu:after {
@@ -7994,16 +8009,20 @@ a :hover {
   clear: both;
 }
 .aa-navmenu-container ul.aa-navmenu li {
+  /* background-color: #ddd; */
+  padding: 3px 10px;
   display: inline-block;
   zoom: 1;
   *display: inline;
   padding-right: 10px;
 }
-.aa-navmenu-container ul.aa-navmenu li > a {
-  font-size: 1em;
+.aa-navmenu-container ul.aa-navmenu li a {
+  text-decoration: none;
+  font-size: 1.3em;
+  font-weight: 700;
 }
-.aa-navmenu-container ul.aa-navmenu li:last-child {
-  padding-right: 0;
+.aa-navmenu-container ul.aa-navmenu li a:hover {
+  color: #FFF;
 }
 .ui-view-container {
   position: relative;

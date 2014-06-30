@@ -7,8 +7,17 @@
  * I'm releasing this website with Apache2 license
  * Feel free to use it and may God bless you!
  */
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id))
+        return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "http://connect.facebook.net/pt_PT/sdk.js#xfbml=1&appId=256560181215554&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 angular.
-        module('adventurecamp', ['ui.router', 'pascalprecht.translate']).
+        module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal']).
         config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $locationProvider) {
                 $urlRouterProvider.otherwise('/home');
@@ -45,7 +54,10 @@ angular.
             }]).
         run(['$rootScope', 'signupSvc',
             function($rootScope, signupSvc) {
-                $rootScope.signupOpen = signupSvc.isOpen();
+                $rootScope.openSignup = function(){
+                    signupSvc.open();
+                }
+                $rootScope.signupOpen = true;
                 $rootScope.changeLocale = function(locale) {
 
                 };

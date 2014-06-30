@@ -1,12 +1,15 @@
-<?
+<?php
 
 namespace AdventureCamp\Data;
 
 class SubscriptionRepository {
-	
+    
+	/**     * @var type \DocumentMannager  */
 	protected $dm;
 
 	const MONGO_SUBSCRIPTION = 'AdventureCamp\Domain\Subscription';
+        
+        const MONGO_SUBSCRIPTION_INFO = 'AdventureCamp\Domain\SubscriptionInfo';
 
 	public function __construct(\Pimple $ioc) {
 		$this->dm = $ioc;
@@ -35,9 +38,22 @@ class SubscriptionRepository {
 		->getQuery()
 		->execute();
 	}
+        /**
+         * Get a Subscription entity by id
+         * 
+         * @param \MongoId $userId
+         * @return \AdventureCamp\Domain\Subscription
+         */
+        public function get(\MongoId $userId) {
+            $entity = $this->dm->createQueryBuilder(self::MONGO_SUBSCRIPTION)
+                    ->field('_id')->equals($userId)
+                    ->getSingleResult()
+                    ->execute();
+            return $entity;
+        }
 
 	public function find(\AdventureCamp\ServiceModel\FindSubscriptionModel $model) {
-		$query = $this->dm->createQueryBuilder(self::MONGO_SUBSCRIPTION);
+		$query = $this->dm->createQueryBuilder(self::MONGO_SUBSCRIPTION_INFO);
 
 		if(is_numeric($model->getSkip)) {
 			$query->skip($model->getSkip());
@@ -54,5 +70,12 @@ class SubscriptionRepository {
 		if(is_numeric($model->getState())) {
 			$query->field('state')->equals($model->getState());
 		}
+                
+                $arr = $query->select('_id', 'name', 'birthday', 'email')
+                        ->getQuery()
+                        ->execute()
+                        ->toArray();
+                
+                return array_values($arr);
 	}
 }
