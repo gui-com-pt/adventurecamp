@@ -17,10 +17,10 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 angular.
-        module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal']).
+        module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal', 'google-maps']).
         config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $locationProvider) {
-                $urlRouterProvider.otherwise('/home');
+                $urlRouterProvider.otherwise('/overview');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider.
@@ -43,17 +43,26 @@ angular.
                             url: '/a-word-to-parents',
                             templateUrl: '/html/word.html',
                             controller: 'wordCtrl'
+                        }).state('admin', {
+                            url: '/admin',
+                            templateUrl: '/html/admin.html',
+                            controller: 'adminCtrl'
                         });
 
                 $translateProvider.useLoader('$translatePartialLoader', {
                     urlTemplate: '/i18n/{lang}/{part}.json'
                 });
 
-                $translateProvider.preferredLanguage('en_US');
+                $translateProvider.preferredLanguage('pt_PT');
                 $translatePartialLoaderProvider.addPart('signup');
             }]).
         run(['$rootScope', 'signupSvc',
             function($rootScope, signupSvc) {
+                /*
+                 * I've also included some pages in this site, but it wasn't necessary
+                 * I'll just hide them */
+                $rootScope.showSite = true;
+                $rootScope.isAdmin = false;
                 $rootScope.openSignup = function(){
                     signupSvc.open();
                 }
@@ -68,7 +77,7 @@ angular.module('adventurecamp').
                             return {
                                 getController: function(){
                                     var deferred = $q.defer();
-                                    $http.get({
+                                    $http({
                                         method: 'GET',
                                         url: '/api/home.json'
                                     }).then(function(res) {
@@ -81,7 +90,7 @@ angular.module('adventurecamp').
                                 view: function(id) {
                                     var deferred = $q.defer();
 
-                                    $http.get({
+                                    $http({
                                         method: 'GET',
                                         url: '/api/registration/' + id
                                     }).then(function(res) {
@@ -94,12 +103,12 @@ angular.module('adventurecamp').
                                 find: function(skip, take) {
                                     var deferred = $q.defer();
 
-                                    $http.get({
-                                        method: 'GET',
-                                        url: '/ai/registration'
-                                    }).then(function(res) {
+                                    $http({
+                                        url: '/api/subscription',
+                                        method: 'GET'
+                                    }).success(function(res) {
                                         deferred.resolve(res);
-                                    }, function(res) {
+                                    }).error(function(res) {
                                         deferred.reject(res);
                                     });
 
@@ -107,7 +116,11 @@ angular.module('adventurecamp').
                                 }
                             }
                         }]).
-                    controller('adminCtrl', [function(){
+                    controller('adminCtrl', ['adminSvc', '$scope', function(svc, $scope){
+                        $scope.subscriptions = [];
+                        svc.find(0, 200).then(function(res) {
+                            $scope.subscriptions = res.subscriptions;
+                        })
                         $scope.confirm = function(){
 
                         };
@@ -124,9 +137,29 @@ angular.module('adventurecamp').
                         }]);
 angular.
         module('adventurecamp').
-        controller('overviewCtrl', [function(){
-                
+        controller('overviewCtrl', ['$scope', function($scope){
+                $scope.map = {
+    center: {
+        latitude: 40.657122,
+        longitude: -7.974762
+    },
+    zoom: 13
+};
+	$scope.mapOptions = {
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+	    styles: [{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#aee2e0"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#abce83"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#769E72"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#7B8758"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"color":"#EBF4A4"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"visibility":"simplified"},{"color":"#8dab68"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#5B5B3F"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ABCE83"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#A4C67D"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#9BBF72"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#EBF4A4"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#87ae79"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#7f2200"},{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"visibility":"on"},{"weight":4.1}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#495421"}]},{"featureType":"administrative.neighborhood","elementType":"labels","stylers":[{"visibility":"off"}]}]
+	};
+	$scope.viewMap = false;
+
+	$scope.markerA = {
+		latlng: {
+		latitude: 40.654485, 
+		longitude: -7.988495
+	},
+	content: "Quinta do Ferronhe"
+	};
         }]);
+
 angular.
         module('adventurecamp').
         service('signupSvc', ['$rootScope', '$http', '$q', '$modal', function($rootScope, $http, $q, $modal) {
@@ -151,19 +184,23 @@ angular.
                     submit: function(req) {
                         var deferred = $q.defer();
 
-                        $http({method: 'POST', url: '/api/subscription', data: req}).
+                        $http({method: 'POST', 
+                            url: '/api/subscription', 
+                            data: req,
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}}).
                                 success(function(res) {
-                                    $modal = $modal.open({
+                                    var instance = $modal.open({
                                         templateUrl: 'signupSuccess.html',
                                         controller: ['$scope', '$modalInstance', '$sce', function($scope, $modalInstance, $sce) {
                                                 $scope.body = $sce.trustAsHtml(getModalText());
                                                 $scope.close = function() {
-                                                    $modalInstance.dismiss();
+                                                    $modalInstance.close();
                                                 };
                                             }]
                                     });
-                                    then(function(res) {
-                                        $rootScope.signupOpen = false;
+                                    instance.result.then(function(res) {
+                                        $rootScope.signupOpen = false; // close the signup form after a sucefully signup
+                                        deferred.resolve();
                                     });
 
                                 }).
@@ -180,7 +217,7 @@ angular.
                     templateUrl: '/html/signup.html',
                     controller: 'signupCtrl',
                     link: function(scope, element, attrs) {
-                        scope.form = {};
+                 
                         scope.subscription = {
                             birthday: null,
                         };
@@ -190,18 +227,27 @@ angular.
                         }
                         
                         scope.submit = function(){
-                            if(scope.form.register.$invalid) {
-                                return;
-                            }
+                        
                             var req = {
                                 name: scope.name,
                                 birthday: scope.birthday,
                                 contact: scope.contact,
                                 email: scope.email,
                                 address: scope.address,
-                                cep: scope.cep
+                                cep: scope.cep,
+                                bi: scope.bi,
+                                observations: scope.observations
                             };
-                            signupSvc.submit(req);
+                            signupSvc.submit(req).then(function() {
+                                scope.name = '';
+                                scope.birthday = '';
+                                scope.contact = '';
+                                scope.email = '';
+                                scope.address = '';
+                                scope.cep = '';
+                                scope.bi = '';
+                                scope.observations = '';
+                            });
                         }
                     }
                 }
@@ -210,7 +256,7 @@ angular.
                 $scope.close = function() {
                     signupSvc.close();
                     $rootScope.signupOpen = false;
-                }
+                };
             }]);
 angular.
         module('adventurecamp').

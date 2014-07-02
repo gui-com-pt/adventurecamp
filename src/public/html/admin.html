@@ -1,0 +1,18 @@
+<div class="aa-section">
+	<table class="table">
+		<thead>
+		<tr>
+		<td>Name</td>
+		<td>Bi</td>
+		<td>Birthday</td>
+		</tr>
+		</thead>
+		<body>
+		<tr ng-repeat="s in subscriptions">
+		<td><span ng-bind="s.name"></span></td>
+		<td><span ng-bind="s.bi"></span></td>
+		<td><span ng-bind="s.birthday.date"></span><button class="pull-right btn btn-primary">Confirm</button></td>
+		</tr>
+		</body>
+	</table>
+</div>

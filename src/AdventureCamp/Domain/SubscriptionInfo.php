@@ -12,6 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @author gui
  * @ODM\Document(collection="subscription")
+ * @ODM\HasLifecycleCallbacks
  */
 class SubscriptionInfo implements \JsonSerializable {
     
@@ -43,6 +44,15 @@ class SubscriptionInfo implements \JsonSerializable {
      * @ODM\Field(type="string")
      */
     protected $email;
+    /**
+     * 
+     * @ODM\Preload
+     */
+    public function preLoad(array &$data) {
+        $dateTime = new \DateTime('@' . $data['birthday']->sec);
+        $dateTime->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $data['birthday'] = $dateTime->format('y-m-d');
+    }
     
     public function jsonSerialize() {
         $vars = $this;

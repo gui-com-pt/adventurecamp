@@ -1,0 +1,13 @@
+{
+    "SIGNUP": {
+        "NAME_LABEL": "Nome completo",
+        "BIRTHDAY_LABEL": "Nascimento (11 aos 16 anos)",
+        "SUBMIT_LABEL" : "Registar inscrição",
+        "ADDRESS_LABEL" : "Morada completa",
+        "CEP_LABEL" : "Código Postal",
+        "EMAIL_LABEL": "Email",
+        "CONTACT_LABEL": "Contacto",
+        "BI_LABEL" : "BI ou cartão de cidadão",
+        "OBS_LABEL": "Outras observações"
+    }
+}

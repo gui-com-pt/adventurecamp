@@ -29,7 +29,9 @@
     "angular-animate": "~1.2.18",
     "angular-bootstrap-datetimepicker": "~0.2.4",
     "angulartics": "~0.15.19",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "angular-google-maps": "~1.1.6",
+    "underscore": "~1.6.0"
   },
   "devDependencies": {
     "jquery": "~2.1.1",

@@ -12,7 +12,7 @@ class SubscriptionRepository {
         const MONGO_SUBSCRIPTION_INFO = 'AdventureCamp\Domain\SubscriptionInfo';
 
 	public function __construct(\Pimple $ioc) {
-		$this->dm = $ioc;
+		$this->dm = $ioc['dm'];
 	}
 
 	public function create(\MongoId $userId, \AdventureCamp\ServiceModel\CreateSubscriptionModel $model) {
@@ -25,7 +25,8 @@ class SubscriptionRepository {
 		$entity->setAddress($model->getAddress());
 		$entity->setCep($model->getCep());
 		$entity->setObservations($model->getObservations());
-		$entity->setState(\AdventureCamp\ServiceModel\SubscriptionState::Created);
+		$entity->setState((int)\AdventureCamp\ServiceModel\SubscriptionState::Created);
+		$entity->setContact($model->getContact());
 		$this->dm->persist($entity);
 		return $entity;
 	}
@@ -47,15 +48,15 @@ class SubscriptionRepository {
         public function get(\MongoId $userId) {
             $entity = $this->dm->createQueryBuilder(self::MONGO_SUBSCRIPTION)
                     ->field('_id')->equals($userId)
-                    ->getSingleResult()
-                    ->execute();
+                    ->getQuery()
+                    ->getSingleResult();
             return $entity;
         }
 
 	public function find(\AdventureCamp\ServiceModel\FindSubscriptionModel $model) {
 		$query = $this->dm->createQueryBuilder(self::MONGO_SUBSCRIPTION_INFO);
 
-		if(is_numeric($model->getSkip)) {
+		if(is_numeric($model->getSkip())) {
 			$query->skip($model->getSkip());
 		}
 

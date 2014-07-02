@@ -1,57 +1,80 @@
-<html ng-app="adventurecamp">
-    <head>
-        <title ng-bind="{{currentPage.title}}"></title>
-        <link rel="stylesheet" type="text/css" href="dist/adventurecamp.css" />
-        <script type="text/javascript" src="bower_components/moment/moment.js"></script>
-        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-        <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-        <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
-        <script type="text/javascript" src="bower_components/angular-bootstrap-validation/dist/angular-bootstrap-validation.js"></script>
-        <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
-        <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>        
-        <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
-        <script type="text/javascript" src="/dist/adventurecamp.js"></script>
-    </head>
-    <body>
-        <div id="fb-root"></div>
-        <div class="container-fluid">
-            <div class="aa-container">
-                <div class="row" id="main">
-                    <div class="aa-signup" ng-class="{'col-xs-7': signupOpen, 'hidden sidebar-closed': !signupOpen}">
-                        <div aa-signup></div>
-                    </div>
-                    <div ng-class="{'col-xs-17': signupOpen, 'col-xs-24': !signupOpen}">
-                            <div class="aa-navmenu-container">
-                                <a class="btn-signup" ng-click="openSignup()" ng-if="!signupOpen">Inscreve-te!</a>
-                                    <ul class="aa-navmenu">
-                                        <li><a ui-sref="home">Home</a></li>
-                                        <li><a ui-sref="overview">Overview</a></li>
-                                        <li><a ui-sref="terms">Terms</a></li>
-                                        <li><a ui-sref="word">Word to Fathers</a></li>
-                                </ul>
-                        </div>
-                        <div class="ui-view-container">
-                            <!--<div  ui-view ng-animate="'view'"></div>-->
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        <div class="modal"
-        <script type="text/ng-template" id="signupSuccess.html">
-              <div class="modal-header">
-            <h3>Bem vindo a esta aventura!</h3>
-            </div>
-            <div class="modal-body">
-            {{body}}
-            </div>
-            <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="close()">Fechar</button>
-            </div>   
-            </script>
-    </body>
-</html>
+<?php
+$a = dirname(__FILE__) . '/../' . PATH_SEPARATOR . get_include_path();
+$b = dirname(__FILE__) . PATH_SEPARATOR . get_include_path();
+set_include_path($b);
+spl_autoload_register();
+require_once '../bootstrap.php';
+
+$config = include('local-settings.php');
+$app = \AdventureCamp\Infrastructure\ApplicationProvider::getApp();
+$ioc = new \Pimple();
+\AdventureCamp\Infrastructure\ContainerFactory::init($ioc, $config);
+
+$app->get('/gui-ugly-code-for-setting-up-adventurecamp-2014-website', function() use($ioc) {
+   $user = new \AdventureCamp\Domain\User();
+   $user->setPassword(md5('123123'));
+   $user->setFirstName('Guilherme');
+   $user->setLastName('Cardoso');
+   $user->setEmail('email@guilhermecardoso.pt');
+   $ioc['dm']->persist($user);
+   $ioc['dm']->flush();
+   echo json_encode($user);
+});
+
+$app->post('/api/subscription', function() use($ioc, $app) {
+    $subscriptionBus = new \AdventureCamp\Business\SubscriptionBusiness($ioc);
+    $model = new \AdventureCamp\ServiceModel\CreateSubscriptionModel();
+    
+    $userId = new \MongoId("53b1f2eba25b8efa1e8b4567");
+    $eventId = new \MongoId("53b1f2eba25b8efa1e8b4567");
+    $request = json_decode($app->environment['slim.input']);
+    $model->setEventId($eventId);
+    $model->setName($request->name);
+    $model->setBi($request->bi);
+    $model->setBirthday(new \DateTime($request->birthday));
+    $model->setEmail($request->email);
+    $model->setAddress($request->address);
+    $model->setCep($request->cep);
+    $model->setContact($request->contact);
+    $model->setObservations(property_exists($request, 'observations') ? $request->observations : 'N/D');
+    $result = $subscriptionBus->create($userId, $model);
+    $response = array(
+        'subscription' => $result
+    );
+    echo json_encode($response);
+});
+
+
+
+$app->get('/api/subscription', function() use($ioc, $app) {
+
+    $model = new \AdventureCamp\ServiceModel\FindSubscriptionModel();
+    $subscriptionBus = new \AdventureCamp\Business\SubscriptionBusiness($ioc);
+
+    $take = is_numeric($app->request()->params('take')) ? $app->request()->params('take') : 100;
+    $model->setTake($take);
+    $skip = is_numeric($app->request()->params('skip')) ? $app->request()->params('skip') : 0;
+    $model->setSkip($skip);
+
+    $results = $subscriptionBus->find($model);
+    $response = array(
+        'subscriptions' => $results
+    );
+    echo json_encode($response);
+});
+
+$app->get('/api/subscription/:id', function($id) use($ioc, $app) {
+    $model = new \AdventureCamp\ServiceModel\FindSubscriptionModel();
+    $subscriptionBus = new \AdventureCamp\Business\SubscriptionBusiness($ioc);
+
+    $result = $subscriptionBus->get(new \MongoId($id));
+    $response = array(
+        'subscription' => $result
+    );
+    echo json_encode($response);
+});
+
+$app->get(".*", function() {
+  include('app.php');
+});
+$app->run();

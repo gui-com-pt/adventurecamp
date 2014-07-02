@@ -4,7 +4,7 @@ angular.module('adventurecamp').
                             return {
                                 getController: function(){
                                     var deferred = $q.defer();
-                                    $http.get({
+                                    $http({
                                         method: 'GET',
                                         url: '/api/home.json'
                                     }).then(function(res) {
@@ -17,7 +17,7 @@ angular.module('adventurecamp').
                                 view: function(id) {
                                     var deferred = $q.defer();
 
-                                    $http.get({
+                                    $http({
                                         method: 'GET',
                                         url: '/api/registration/' + id
                                     }).then(function(res) {
@@ -30,12 +30,12 @@ angular.module('adventurecamp').
                                 find: function(skip, take) {
                                     var deferred = $q.defer();
 
-                                    $http.get({
-                                        method: 'GET',
-                                        url: '/ai/registration'
-                                    }).then(function(res) {
+                                    $http({
+                                        url: '/api/subscription',
+                                        method: 'GET'
+                                    }).success(function(res) {
                                         deferred.resolve(res);
-                                    }, function(res) {
+                                    }).error(function(res) {
                                         deferred.reject(res);
                                     });
 
@@ -43,7 +43,11 @@ angular.module('adventurecamp').
                                 }
                             }
                         }]).
-                    controller('adminCtrl', [function(){
+                    controller('adminCtrl', ['adminSvc', '$scope', function(svc, $scope){
+                        $scope.subscriptions = [];
+                        svc.find(0, 200).then(function(res) {
+                            $scope.subscriptions = res.subscriptions;
+                        })
                         $scope.confirm = function(){
 
                         };

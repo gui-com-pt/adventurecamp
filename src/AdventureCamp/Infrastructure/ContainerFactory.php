@@ -26,7 +26,20 @@ class ContainerFactory {
      * @param \Pimple $ioc
      * @return \Pimple
      */
-    public static function init(\Pimple &$ioc) {
+    public static function init(\Pimple &$ioc, $localSettings = array()) {
+
+$defaultSettings = array(
+    'smtp.host' => 'localhost',
+    'smtp.port' => 25,
+    'smtp.authenticate' => false,
+    'smtp.security' => null,
+    'smtp.username' => null,
+    'smtp.password' => null
+);
+$configs = array_replace($defaultSettings, $appSettings);
+        $ioc['config'] = function() use($configs){
+            return $configs;
+        };
         $ioc['dm'] = function($c) {
 
             AnnotationDriver::registerAnnotationClasses();

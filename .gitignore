@@ -1,3 +1,4 @@
 node_modules/*
 src/public/bower_components/*
 src/vendor/*
+src/public/local-settings.php

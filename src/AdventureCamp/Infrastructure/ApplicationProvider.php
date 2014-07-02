@@ -15,7 +15,6 @@ namespace AdventureCamp\Infrastructure;
 class ApplicationProvider {
     
     public static function getApp(){
-        
         $app = new \Slim\Slim(array(
             'mode' => 'development'
         ));

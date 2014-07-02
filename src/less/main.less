@@ -3,10 +3,11 @@
 
 body {
     background-color: #355c6e;
+    margin-bottom: 10px;
 }
 h2 {
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 a &:hover {
     text-decoration:none; 
@@ -14,28 +15,43 @@ a &:hover {
 
 #main {
     /*background-image: url('/assets/bgsignup.jpg');
-    background-size: cover;
-    min-height: 520px;*/
+    background-size: cover;*/
+    min-height: 520px;
 }
 .aa-container {
     background-image: url('/assets/bgsignup.jpg');
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    padding-bottom: 200px;
 }
 .sidebar-closed {
     
 }
 
-
+.aa-footer {
+    padding-top: 10px;
+    text-align: center;
+    color: #FFFFFF;
+    a {
+        color: #FFFFFF;
+        &:hover {
+            color :#FFFFFF;
+            text-decoration: none;
+        }
+    }
+    font-size:0.9em;
+    font-weight: 400;
+}
 .aa-section {
     .transparentBackgroundColorMixin(0.9, #FFFFFF);
-    padding: 10px;
-    overflow: auto;
-    max-height: 700px;
+    padding: 25px;
+    text-align: justify;
 }
 /* 
  * Used for first words in the begining of a sentence
  */
-.aa-texta {
+.aa-text-lg {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.1em;
@@ -56,12 +72,49 @@ a &:hover {
 
 .aa-signup {
     .transparentBackgroundColorMixin(0.9, @colorSecondary);
+    padding-top: 4px;
+    /* close icon */
+    .aa-hic {
+        font-size:2em;
+        float: right;
+    }
 }
 
 .btn-signup {
     float: left;
     background-color: #71cf5f;
-    color: @brand-primary;
-    font-weight: 700;
+    color: #FFF;
+    cursor: pointer;
+    font-weight: bold;
     padding:4px 20px;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
+
+/*
+ * Overview
+ */
+ .angular-google-map-container { height: 500px; }
+ .aa-mapl {
+    color: @brand-primary;
+    font-weight: bold;
+    cursor: pointer;
+ }
+
+/*
+ * Logo Jorjov
+ */
+ .aa-fj {
+  
+    position: relative;
+
+ }
+ .aa-fjlogo {
+    width: 160px;
+    position: absolute;
+    bottom: -200px;
+    right: 20px;
+      .transparentBackgroundColorMixin(0.9, @colorSecondary);  
+ }

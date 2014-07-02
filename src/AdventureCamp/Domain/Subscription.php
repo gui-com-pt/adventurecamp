@@ -52,9 +52,14 @@ class Subscription implements \JsonSerializable {
     protected $observations;
     
     /**
-     * @ODM\Field
+     * @ODM\Field(type="int")
      */
     protected $state;
+
+    /**
+     * @ODM\Field(type="string")
+     */
+    protected $contact;
     
     public function jsonSerialize() {
         $vars = $this;
@@ -129,5 +134,12 @@ class Subscription implements \JsonSerializable {
     }
     public function setState($state) {
         $this->state = $state;
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+    public function setContact($contact) {
+        $this->contact = $contact;
     }
 }

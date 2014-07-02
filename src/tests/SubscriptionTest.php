@@ -34,6 +34,15 @@ class SubscriptionTest extends BaseTest {
        $this->eventId = new \MongoId($event->getId());
    }
    
+   public function testConfirmSubscription(){
+       $id = $this->getSubscriptionId();
+       $this->subscriptionBusiness->confirm($id);
+       
+       $subscription = $this->subscriptionRepository->get($id);
+       $this->dm->refresh($subscription);
+       $this->assertEquals((int)$subscription->getState(), (int) \AdventureCamp\ServiceModel\SubscriptionState::Confirmed);
+   }
+   
    public function testCreateSubscription(){
        $model = new \AdventureCamp\ServiceModel\CreateSubscriptionModel();
        $model->setEventId($this->eventId);
@@ -51,8 +60,30 @@ class SubscriptionTest extends BaseTest {
        
        $subscription = $this->subscriptionBusiness->create($userId, $model);
        
-       $subscriptionDb = $this->subscriptionRepository->get($subscription->getId());
+       $subscriptionDb = $this->subscriptionRepository->get(new \MongoId($subscription->getId()));
        
        $this->assertEquals($subscription->getName(), $subscriptionDb->getName());
+   }
+   
+   /**
+    * Create a new subscription and return his id
+    * @return \MongoId
+    */
+   private function getSubscriptionId(){
+       $entity = new \AdventureCamp\Domain\Subscription();
+       $entity->setEventId($this->eventId);
+       $entity->setName('Carlos Guilherme Magalhães Cardoso');
+       $entity->setAddress('Viseu, linda cidade museu');
+       $entity->setBi('007 007 007');
+       $birthday = new DateTime();
+       $birthday->modify('-12 year');
+       $entity->setBirthday($birthday);
+       $entity->setCep('3500');
+       $entity->setEmail('email@gui.pt');
+       $entity->setObservations('Eu sou alérgico!');
+       $entity->setState((int) \AdventureCamp\ServiceModel\SubscriptionState::Created);
+       $this->dm->persist($entity);
+       $this->dm->flush();
+       return new \MongoId($entity->getId());
    }
 }

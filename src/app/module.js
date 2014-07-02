@@ -17,10 +17,10 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 angular.
-        module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal']).
+        module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal', 'google-maps']).
         config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $locationProvider) {
-                $urlRouterProvider.otherwise('/home');
+                $urlRouterProvider.otherwise('/overview');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider.
@@ -43,17 +43,26 @@ angular.
                             url: '/a-word-to-parents',
                             templateUrl: '/html/word.html',
                             controller: 'wordCtrl'
+                        }).state('admin', {
+                            url: '/admin',
+                            templateUrl: '/html/admin.html',
+                            controller: 'adminCtrl'
                         });
 
                 $translateProvider.useLoader('$translatePartialLoader', {
                     urlTemplate: '/i18n/{lang}/{part}.json'
                 });
 
-                $translateProvider.preferredLanguage('en_US');
+                $translateProvider.preferredLanguage('pt_PT');
                 $translatePartialLoaderProvider.addPart('signup');
             }]).
         run(['$rootScope', 'signupSvc',
             function($rootScope, signupSvc) {
+                /*
+                 * I've also included some pages in this site, but it wasn't necessary
+                 * I'll just hide them */
+                $rootScope.showSite = true;
+                $rootScope.isAdmin = false;
                 $rootScope.openSignup = function(){
                     signupSvc.open();
                 }

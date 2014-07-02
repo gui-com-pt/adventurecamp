@@ -20,6 +20,8 @@ class CreateSubscriptionModel {
 
     protected $observations;
 
+    protected $contact;
+
     public function getEventId(){
     	return $this->eventId;
     }
@@ -75,5 +77,12 @@ class CreateSubscriptionModel {
     }
     public function setObservations($observations) {
         $this->observations = $observations;
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+    public function setContact($contact) {
+        $this->contact = $contact;
     }
 }

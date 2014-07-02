@@ -22,19 +22,23 @@ angular.
                     submit: function(req) {
                         var deferred = $q.defer();
 
-                        $http({method: 'POST', url: '/api/subscription', data: req}).
+                        $http({method: 'POST', 
+                            url: '/api/subscription', 
+                            data: req,
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}}).
                                 success(function(res) {
-                                    $modal = $modal.open({
+                                    var instance = $modal.open({
                                         templateUrl: 'signupSuccess.html',
                                         controller: ['$scope', '$modalInstance', '$sce', function($scope, $modalInstance, $sce) {
                                                 $scope.body = $sce.trustAsHtml(getModalText());
                                                 $scope.close = function() {
-                                                    $modalInstance.dismiss();
+                                                    $modalInstance.close();
                                                 };
                                             }]
                                     });
-                                    then(function(res) {
-                                        $rootScope.signupOpen = false;
+                                    instance.result.then(function(res) {
+                                        $rootScope.signupOpen = false; // close the signup form after a sucefully signup
+                                        deferred.resolve();
                                     });
 
                                 }).
@@ -51,7 +55,7 @@ angular.
                     templateUrl: '/html/signup.html',
                     controller: 'signupCtrl',
                     link: function(scope, element, attrs) {
-                        scope.form = {};
+                 
                         scope.subscription = {
                             birthday: null,
                         };
@@ -61,18 +65,27 @@ angular.
                         }
                         
                         scope.submit = function(){
-                            if(scope.form.register.$invalid) {
-                                return;
-                            }
+                        
                             var req = {
                                 name: scope.name,
                                 birthday: scope.birthday,
                                 contact: scope.contact,
                                 email: scope.email,
                                 address: scope.address,
-                                cep: scope.cep
+                                cep: scope.cep,
+                                bi: scope.bi,
+                                observations: scope.observations
                             };
-                            signupSvc.submit(req);
+                            signupSvc.submit(req).then(function() {
+                                scope.name = '';
+                                scope.birthday = '';
+                                scope.contact = '';
+                                scope.email = '';
+                                scope.address = '';
+                                scope.cep = '';
+                                scope.bi = '';
+                                scope.observations = '';
+                            });
                         }
                     }
                 }
@@ -81,5 +94,5 @@ angular.
                 $scope.close = function() {
                     signupSvc.close();
                     $rootScope.signupOpen = false;
-                }
+                };
             }]);
