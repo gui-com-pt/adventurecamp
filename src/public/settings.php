@@ -7,7 +7,7 @@ $configLocal = array(
     'smtp.host' => 'localhost',
     'smtp.port' => 25,
     'smtp.authenticate' => true,
-    'smtp.security' => null
+    'smtp.security' => null,
     'smtp.username' => null,
     'smtp.password' => null
 );

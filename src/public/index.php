@@ -77,4 +77,7 @@ $app->get('/api/subscription/:id', function($id) use($ioc, $app) {
 $app->get(".*", function() {
   include('app.php');
 });
+$app->post(".*", function() {
+  include('app.php');
+});
 $app->run();
