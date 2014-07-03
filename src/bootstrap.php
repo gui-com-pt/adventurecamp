@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('UTC');
 
 $vendorDir = __DIR__ . '/vendor/';
 require $vendorDir . 'autoload.php';
