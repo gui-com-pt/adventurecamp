@@ -1,0 +1,41 @@
+<div class="aa-section">
+<p>Preenche este formulário com os dados da transferência bancária para confirmares a tua inscrição.<br>Se tiveres alguma questão superior, não hesites em contactar-nos através de <a href="mailto:acampamento.aventura.viseu@gmail.com">acampamento.aventura.viseu@gmail.com</a></p>
+	<form class="form" novalidate ng-submit="submit()" name="form.confirm">
+		<div class="form-group">
+			<label class="control-label">O teu nome completo</label>
+			<input type="text" class="form-control" ng-model="name" required />
+		</div>
+		<div class="form-group">
+			<label class="control-label">Nº Transacção</label>
+			<input type="text" class="form-control" ng-model="tranNumb" required />
+		</div>
+		<div class="form-group">
+			<label class="control-label">Data</label>
+			<div class="dropdown">
+                <a class="dropdown-toggle" id="birthdayDropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" data-ng-model="when" />
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <datetimepicker required ng-model="when" data-datetimepicker-config="{ dropdownSelector: '#birthdayDropdown', minView: 'day', startView: 'year' }"/>
+                </ul>
+            </div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Quantia</label>
+			<input type="text" class="form-control" ng-model="ammount" required />
+		</div>
+		<div class="form-group">
+			<label class="control-label">Observações</label>
+			<textarea ng-model="obs" class="form-control" rows="4"></textarea>
+		</div>
+		<div class="form-group clearfix">
+			<p class="bg-primary" ng-if="submitMsgShow" ng-bind="submitMsg"></p>
+			<button type="submit" ng-disabled="form.confirm.$pristine || (form.confirm.$dirty && form.confirm.$invalid)" class="btn btn-primary pull-right">Confirmar Registo</button>
+		</div>
+	</form>
+</div>

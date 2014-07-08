@@ -64,6 +64,10 @@ angular.
                             signupSvc.close();
                         }
                         
+                        scope.confirmModal = function(){
+                            signupSvc.openConfirmModal();
+                        }
+
                         scope.submit = function(){
                         
                             var req = {

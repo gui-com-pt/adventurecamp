@@ -29,14 +29,14 @@ class ContainerFactory {
     public static function init(\Pimple &$ioc, $localSettings = array()) {
 
 $defaultSettings = array(
-    'smtp.host' => 'localhost',
+    'smtp.hostname' => 'localhost',
     'smtp.port' => 25,
     'smtp.authenticate' => false,
     'smtp.security' => null,
     'smtp.username' => null,
     'smtp.password' => null
 );
-$configs = array_replace($defaultSettings, $appSettings);
+$configs = array_replace($defaultSettings, $localSettings);
         $ioc['config'] = function() use($configs){
             return $configs;
         };

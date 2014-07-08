@@ -44,6 +44,14 @@ $app->post('/api/subscription', function() use($ioc, $app) {
     echo json_encode($response);
 });
 
+$app->post('/api/subscription/confirm', function() use($ioc, $app) {
+  $svc = new \AdventureCamp\Business\SubscriptionBusiness($ioc);
+  $request = json_decode($app->environment['slim.input']);
+
+  $obs = property_exists($request, 'obs') ? $request->obs : 'N/A';
+  $svc->reqConfirmation($request->tranNumb, $request->when, $request->ammount, $request->name, $obs);
+});
+
 
 
 $app->get('/api/subscription', function() use($ioc, $app) {

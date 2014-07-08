@@ -7,7 +7,9 @@
  * I'm releasing this website with Apache2 license
  * Feel free to use it and may God bless you!
  */
-(function(d, s, id) {
+       $(function() {
+
+ (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id))
         return;
@@ -16,6 +18,8 @@
     js.src = "http://connect.facebook.net/pt_PT/sdk.js#xfbml=1&appId=256560181215554&version=v2.0";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+ moment.lang('pt');
+});
 angular.
         module('adventurecamp', ['ui.router', 'pascalprecht.translate', 'bs-validation', 'ngAnimate', 'ui.bootstrap.datetimepicker', 'ui.bootstrap', 'ui.bootstrap.modal', 'google-maps']).
         config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$locationProvider',
@@ -29,8 +33,13 @@ angular.
                             templateUrl: '/html/home.html',
                             controller: 'homeCtrl'
                         }).
+                        state('signupConfirm', {
+                            url: '/confirm',
+                            templateUrl: '/html/signupConfirm.html',
+                            controller: 'signupConfirmCtrl'
+                        }).
                         state('overview', {
-                            url: '/overview',
+                            url: '/',
                             templateUrl: '/html/overview.html',
                             controller: 'overviewCtrl'
                         }).
@@ -58,6 +67,7 @@ angular.
             }]).
         run(['$rootScope', 'signupSvc',
             function($rootScope, signupSvc) {
+
                 /*
                  * I've also included some pages in this site, but it wasn't necessary
                  * I'll just hide them */

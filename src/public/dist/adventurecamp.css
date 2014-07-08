@@ -8070,6 +8070,8 @@ a :hover {
   padding-right: 10px;
 }
 .aa-navmenu-container ul.aa-navmenu li a {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
   text-decoration: none;
   font-size: 1.3em;
   font-weight: 700;

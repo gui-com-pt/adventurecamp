@@ -1,8 +1,10 @@
 <html ng-app="adventurecamp">
     <head>
         <title>Acampamento Aventura 2014</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="dist/adventurecamp.css" />
         <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+        <script type="text/javascript" src="bower_components/moment/lang/pt.js"></script>
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -55,17 +57,15 @@
             </div>
         </div>
         <script type="text/ng-template" id="signupSuccess.html">
-        
-              <div class="modal-header">
+        <div class="modal-header">
             <h3>Bem vindo a esta aventura!</h3>
             </div>
-            <div class="modal-body">
-            {{body}}
+            <div class="modal-body" ng-bind-html="body">
+            
             </div>
             <div class="modal-footer">
             <button class="btn btn-primary" ng-click="close()">Fechar</button>
-            </div>   
-
+            </div>
             </script>
     </body>
 </html>
