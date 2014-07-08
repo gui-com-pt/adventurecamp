@@ -3,9 +3,9 @@ angular.
         service('signupSvc', ['$rootScope', '$http', '$q', '$modal', function($rootScope, $http, $q, $modal) {
                 var s = {};
                 var getModalText = function() {
-                    return "<p>Obrigado por te teres juntado á nossa aventura!</p>" +
-                            "<p>Estás preparado? Faltam 24 dias!</p>\n\
-<p>Revê o que vais precisar: </p>";
+                    return '<p>Obrigado por te teres juntado á nossa aventura!</p>' +
+                            '<p>Enviámos-te um email com os dados necessários para o pagamento por transferência.</p>' +
+                            '<p>Caso tenhas dúvidas adicionais, não hesites em contactar-nos através do mail: <a href="mailto:acampamento.aventura.viseu@gmail.com">acampamento.aventura.viseu@gmail.com</a></p>';
                 }
 
                 s.opened = true;
