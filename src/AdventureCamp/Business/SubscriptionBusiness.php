@@ -60,7 +60,7 @@ class SubscriptionBusiness {
 
         $subject = 'AA 2014 - Inscrição';
         $from = $model->getEmail();
-        $to = 'acampamento.aventura.viseu@gmail.com';
+        $to = 'email@guilhermecardoso.pt';
         $body = '<p><b>Nome</b> ' . $model->getName() . '</p>' .
          '<p><b>Data de Nascimento</b> ' . $model->getBirthday()->format('y-m-d') . '</p>' .
          '<p><b>Email </b> ' . $model->getEmail() . '</p>' .
@@ -109,7 +109,7 @@ class SubscriptionBusiness {
                 '<p><b>Data</b> ' . $when . '</p>' .
                 '<p><b>Ammount</b> ' . $ammount . '</p>' .
                 '<p><b>Observations</b> ' . $obs . ' </p>';
-        $this->sendEmail('email@guilhermecardoso.pt', 'acampamento.aventura.viseu@gmail.com', $subject, $body);
+        $this->sendEmail('email@guilhermecardoso.pt', 'email@guilhermecardoso.pt', $subject, $body);
 
     }
     
