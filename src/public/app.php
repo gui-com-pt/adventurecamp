@@ -37,7 +37,7 @@
                                         <li><a ui-sref="terms">Responsabilidade</a></li>
                                         <li><a ui-sref="word">Palavra aos Pais</a></li>
                                         <li ng-if="isAdmin"><a ui-sref="admin">Administração</a></li>
-                                        <li class="aa-papperpdf"><i class="fa fa-file-pdf-o"></i> <a target="_blank" href="#">pdf</a></li>
+                                        <li class="aa-papperpdf"><i class="fa fa-file-pdf-o"></i> <a target="_blank" href="/assets/inscricao_acampamento_aventura_2014.pdf">pdf</a></li>
                                 </ul>
 
                         </div>
